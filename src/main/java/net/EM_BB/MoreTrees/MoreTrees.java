@@ -1,7 +1,10 @@
 package net.EM_BB.MoreTrees;
 
 import com.mojang.logging.LogUtils;
+import net.EM_BB.MoreTrees.item.ModItems;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.CreativeModeTabRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -25,6 +28,8 @@ public class MoreTrees {
     public MoreTrees() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        ModItems.register(modEventBus);
+
         modEventBus.addListener(this::commonSetup);
 
         MinecraftForge.EVENT_BUS.register(this);
@@ -39,9 +44,14 @@ public class MoreTrees {
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
 
+        if(event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) {
+            event.accept(ModItems.PEAR);
+
+        }
+
     }
 
-   
+
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
 
